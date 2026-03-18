@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}FruitHaven — Fresh Fruits Delivered{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Fresh Fruits,<br><em>Delivered</em> to You</h1>
+    <p class="hero-desc">Premium imported and local fruits — picked at peak ripeness, sourced from trusted farms, delivered fresh to your door across Malaysia.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Varieties</div></div>
+      <div class="stat"><div class="stat-num" style="color:var(--gold)">RM8+</div><div class="stat-label">Starting price</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Fresh</div></div>
+    </div>
+    <div class="hero-actions">
+      <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.6rem 1.5rem;font-size:.95rem">Shop Now</a>
+      <a href="{{ url_for('about') }}" class="btn-ghost" style="padding:.6rem 1.5rem;font-size:.95rem">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="badge-num">🍎🫐🥭</div>
+    <div class="badge-label" style="margin-top:8px">New arrivals weekly</div>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+{% set fruits = [
+  (1,  "Envy Apple",           "New Zealand",       "🍎", 10.00, "pc",   "Seasonal"),
+  (2,  "Dragon Fruit",         "Malaysia",          "🐲", 26.00, "kg",   "Local"),
+  (3,  "Bing Cherry",          "USA",               "🍒", 45.00, "200g", "Imported"),
+  (4,  "Australian Blueberry", "Australia",         "🫐", 28.00, "box",  "Imported"),
+  (6,  "Cameron Strawberry",   "Cameron Highlands", "🍓", 15.00, "box",  "Local"),
+  (10, "Harum Manis Mango",    "Malaysia",          "🥭", 18.00, "kg",   "Seasonal")
+] %}
+
+<div class="section" style="padding-top:0">
+  <div class="section-header">
+    <div class="section-title">Popular This Week</div>
+    <a href="{{ url_for('shop') }}" class="section-link">View all →</a>
+  </div>
+  <div class="product-grid">
+    {% for id, name, origin, emoji, price, unit, tag in fruits %}
+    <div class="product-card">
+      <div class="card-img">
+        <span class="card-tag">{{ tag }}</span>
+        <span style="font-size:3rem">{{ emoji }}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">{{ name }}</div>
+        <div class="card-origin">{{ origin }}</div>
+        <div class="card-footer-row">
+          <div class="card-price">RM {{ "%.2f"|format(price) }}<span> /{{ unit }}</span></div>
+          <form method="POST" action="{{ url_for('cart_add') }}">
+            <input type="hidden" name="fruit_id"    value="{{ id }}">
+            <input type="hidden" name="fruit_name"  value="{{ name }}">
+            <input type="hidden" name="fruit_emoji" value="{{ emoji }}">
+            <input type="hidden" name="price"       value="{{ price }}">
+            <input type="hidden" name="unit"        value="{{ unit }}">
+            <input type="hidden" name="redirect_to" value="index">
+            <button type="submit" class="add-btn">+</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
