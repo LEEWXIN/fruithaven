@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Admin — FruitHaven{% endblock %}
+{% block content %}
+<div style="max-width:1100px;margin:0 auto;padding:2rem">
+
+  <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem">Admin Dashboard</div>
+
+  <!-- STATS -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2.5rem">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Total Orders</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.8rem">{{ orders|length }}</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Total Revenue</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold)">RM {{ "%.2f"|format(total_revenue) }}</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Registered Users</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--green)">{{ users|length }}</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Pending Orders</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#f59e0b">{{ pending_orders }}</div>
+    </div>
+  </div>
+
+  <!-- ORDERS TABLE -->
+  <div style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem">All Orders</div>
+  <div style="overflow-x:auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-bottom:2.5rem">
+    <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+      <thead>
+        <tr>
+          {% for h in ['Order ID','Customer','Items','Total','Address','Payment','Date','Status'] %}
+          <th style="text-align:left;padding:.75rem 1rem;font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);font-weight:400">{{ h }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Playfair Display',serif">#{{ o.id }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted)">{{ o.username }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);max-width:200px">
+            {% for item in o.items %}{{ item.emoji }} {{ item.name }} ×{{ item.qty }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);white-space:nowrap">RM {{ "%.2f"|format(o.total) }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);max-width:160px;font-size:.78rem">{{ o.address }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);font-size:.78rem">{{ o.payment }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-dim);white-space:nowrap;font-size:.78rem">{{ o.created }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
+            <form method="POST" action="{{ url_for('update_status') }}" style="display:flex;gap:.5rem;align-items:center">
+              <input type="hidden" name="order_id" value="{{ o.raw_id }}">
+              <select name="status"
+                style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:.8rem;font-family:'DM Sans',sans-serif;cursor:pointer">
+                {% for s in ['Pending','Processing','Shipped','Delivered','Cancelled'] %}
+                <option value="{{ s }}" {{ 'selected' if o.status == s }}>{{ s }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" style="background:var(--green-dim);border:1px solid var(--border-h);border-radius:6px;padding:3px 10px;color:var(--green);font-size:.78rem;cursor:pointer;font-family:'DM Sans',sans-serif">Save</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-dim)">No orders yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- USERS TABLE -->
+  <div style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem">Registered Users</div>
+  <div style="overflow-x:auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px">
+    <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+      <thead>
+        <tr>
+          {% for h in ['ID','Username','Role','Joined'] %}
+          <th style="text-align:left;padding:.75rem 1rem;font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);font-weight:400">{{ h }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-dim)">{{ u.id }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted)">{{ u.username }}</td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
+            <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:{{ 'var(--gold)' if u.role == 'admin' else 'var(--green)' }}">{{ u.role }}</span>
+          </td>
+          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-dim);font-size:.78rem">{{ u.created }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
