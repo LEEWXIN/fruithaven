@@ -94,4 +94,4 @@ This version combines the best of both: the fruit catalogue and nutrition data f
 
 **Lee Wen Xin**  
 Bachelor of IT, Raffles University  
-[GitHub](https://github.com/YOUR_USERNAME)
+[GitHub](https://github.com/LEEWXIN/fruithaven.git)
