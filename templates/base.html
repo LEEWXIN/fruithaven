@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}FruitHaven{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="{{ url_for('index') }}" class="nav-logo">FruitHaven</a>
+
+  <ul class="nav-links">
+    <li><a href="{{ url_for('index') }}"  class="{{ 'active' if request.endpoint == 'index' }}">Home</a></li>
+    <li><a href="{{ url_for('shop') }}"   class="{{ 'active' if request.endpoint == 'shop' }}">Shop</a></li>
+    <li><a href="{{ url_for('about') }}"  class="{{ 'active' if request.endpoint == 'about' }}">About</a></li>
+    <li><a href="{{ url_for('contact') }}" class="{{ 'active' if request.endpoint == 'contact' }}">Contact</a></li>
+    {% if session.user_id %}
+    <li><a href="{{ url_for('orders') }}" class="{{ 'active' if request.endpoint == 'orders' }}">My Orders</a></li>
+    {% endif %}
+    {% if session.role == 'admin' %}
+    <li><a href="{{ url_for('admin') }}"  class="{{ 'active' if request.endpoint == 'admin' }}" style="color:var(--gold)">Admin</a></li>
+    {% endif %}
+  </ul>
+
+  <div class="nav-right">
+    {% if session.user_id %}
+      <span class="nav-user">Hi, {{ session.username }}</span>
+      <a href="{{ url_for('logout') }}" class="btn-ghost">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}"    class="btn-ghost">Login</a>
+      <a href="{{ url_for('register') }}" class="btn-primary">Register</a>
+    {% endif %}
+    <a href="{{ url_for('cart') }}" class="cart-btn">
+      <i class="fa-solid fa-basket-shopping"></i> Cart
+      <span class="cart-count">{{ session.get('cart', [])|sum(attribute='qty') if session.get('cart') else 0 }}</span>
+    </a>
+  </div>
+
+  <button class="toggle-btn" onclick="this.nextElementSibling.classList.toggle('open')">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="{{ url_for('index') }}">Home</a>
+  <a href="{{ url_for('shop') }}">Shop</a>
+  <a href="{{ url_for('about') }}">About</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  {% if session.user_id %}
+  <a href="{{ url_for('orders') }}">My Orders</a>
+  <a href="{{ url_for('logout') }}">Logout</a>
+  {% else %}
+  <a href="{{ url_for('login') }}">Login</a>
+  <a href="{{ url_for('register') }}">Register</a>
+  {% endif %}
+</div>
+
+<!-- FLASH MESSAGES -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- PAGE CONTENT -->
+{% block content %}{% endblock %}
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-brand">FruitHaven</div>
+      <p>Fresh fruits, delivered with care across Malaysia.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('shop') }}">Shop</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>info@fruithaven.my</p>
+      <p>+60 12-345 6789</p>
+      <p>Johor Bahru, Malaysia</p>
+    </div>
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+      <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2025 FruitHaven. All rights reserved.</div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
