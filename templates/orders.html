@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}My Orders — FruitHaven{% endblock %}
+{% block content %}
+<div class="section" style="max-width:700px;margin:0 auto">
+  <div class="section-title" style="margin-bottom:1.5rem">My Orders</div>
+
+  {% if orders %}
+    {% set status_colors = {'Pending':'var(--gold)','Processing':'#5b9cf6','Shipped':'#a78bfa','Delivered':'var(--green)','Cancelled':'#e08080'} %}
+    {% for o in orders %}
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+        <span style="font-family:'Playfair Display',serif;color:var(--gold)">#{{ o.id }}</span>
+        <span style="font-size:.75rem;padding:2px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:{{ status_colors.get(o.status, 'var(--text-muted)') }}">
+          {{ o.status }}
+        </span>
+      </div>
+      <div style="font-size:.82rem;color:var(--text-muted);margin-bottom:.75rem">
+        {% for item in o.items %}{{ item.emoji }} {{ item.name }} ×{{ item.qty }}{% if not loop.last %} · {% endif %}{% endfor %}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.8rem;color:var(--text-dim)">📍 {{ o.address }}</span>
+        <span style="font-family:'Playfair Display',serif">RM {{ "%.2f"|format(o.total) }}</span>
+      </div>
+      <div style="font-size:.75rem;color:var(--text-dim);margin-top:.5rem">{{ o.created }} · {{ o.payment }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div style="text-align:center;padding:4rem 0;color:var(--text-dim)">
+      <div style="font-size:3rem;margin-bottom:1rem">📦</div>
+      <p style="margin-bottom:1.5rem">No orders yet</p>
+      <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.65rem 1.5rem">Start Shopping</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
