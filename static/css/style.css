@@ -609,3 +609,21 @@ img { display: block; width: 100%; }
   .product-grid { grid-template-columns: repeat(2, 1fr); }
   .cart-sidebar { width: 100%; right: -100%; }
 }
+
+/* ── FLASH MESSAGES ── */
+.flash-container { max-width:1100px; margin:1rem auto; padding:0 2rem; }
+.flash { padding:.75rem 1.25rem; border-radius:8px; font-size:.875rem; margin-bottom:.5rem; }
+.flash-success { background:var(--green-dim); border:1px solid var(--border-h); color:var(--green); }
+.flash-error   { background:#3a1a1a; border:1px solid #5a2a2a; color:#e08080; }
+
+/* ── FORM SELECT ── */
+.form-select {
+  width:100%; background:var(--bg); border:1px solid var(--border);
+  border-radius:8px; padding:.7rem 1rem; color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:.9rem; transition:border-color .2s;
+}
+.form-select:focus { outline:none; border-color:var(--border-h); }
+
+/* ── MISC ── */
+.nav-user { font-size:.85rem; color:var(--text-muted); }
+a.chip { display:inline-block; }
