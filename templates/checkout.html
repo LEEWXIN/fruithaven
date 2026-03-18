@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Checkout — FruitHaven{% endblock %}
+
+{% block content %}
+<div style="max-width:800px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start">
+
+  <!-- DELIVERY FORM -->
+  <div>
+    <div class="section-title" style="margin-bottom:1.5rem">Delivery Details</div>
+    <form method="POST" action="{{ url_for('checkout') }}"
+          style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+      <div class="form-row">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Your full name" required />
+      </div>
+      <div class="form-row">
+        <label>Phone Number</label>
+        <input type="tel" name="phone" placeholder="+60 12-345 6789" required />
+      </div>
+      <div class="form-row">
+        <label>Delivery Address</label>
+        <textarea name="address" rows="4" placeholder="Street, city, postcode..." required></textarea>
+      </div>
+      <div class="form-row">
+        <label>Payment Method</label>
+        <select name="payment" class="form-select">
+          <option>Online Banking (FPX)</option>
+          <option>Credit / Debit Card</option>
+          <option>Cash on Delivery</option>
+          <option>e-Wallet (Touch n Go)</option>
+        </select>
+      </div>
+      <button type="submit" class="form-submit">Place Order</button>
+    </form>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div>
+    <div class="section-title" style="margin-bottom:1.5rem">Order Summary</div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+      {% for item in cart %}
+      <div style="display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.875rem">
+        <span>{{ item.emoji }} {{ item.name }} × {{ item.qty }}</span>
+        <span style="color:var(--gold)">RM {{ "%.2f"|format(item.price * item.qty) }}</span>
+      </div>
+      {% endfor %}
+      <div style="display:flex;justify-content:space-between;padding:.75rem 0;font-weight:500">
+        <span>Total</span>
+        <span style="font-family:'Playfair Display',serif;font-size:1.2rem">RM {{ "%.2f"|format(total) }}</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
