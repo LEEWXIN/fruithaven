@@ -1,16 +1,17 @@
 # 🍎 FruitHaven — Online Fruit Store
 
-A frontend web application for browsing and ordering fresh fruits online. Built as a personal project to revisit and improve upon an earlier diploma-era Java Swing project.
+A full-stack fruit ordering web application built with Python Flask and SQLite. Started as a personal project to revisit and improve upon earlier diploma-era projects.
 
 ---
 
 ## ✨ Features
 
+- **User Auth** — Register and login with hashed passwords
 - **Product Catalogue** — 12 fruit varieties with pricing, origin, and nutrition info
-- **Shopping Cart** — Add, remove, and adjust quantities with live total
-- **Checkout** — Delivery details form with payment method selection
-- **Order History** — Past orders saved locally in the browser
-- **Nutrition Modal** — Recommended / avoid info for each fruit
+- **Shopping Cart** — Add, remove, and adjust quantities
+- **Checkout** — Delivery details and payment method saved to database
+- **Order History** — View all past orders with status tracking
+- **Admin Dashboard** — View all orders, update status, manage users
 - **Responsive Design** — Works on desktop and mobile
 - **Filter by Category** — Seasonal, Local, Imported
 
@@ -18,14 +19,14 @@ A frontend web application for browsing and ordering fresh fruits online. Built 
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Markup | HTML5 |
-| Styling | CSS3 (custom, no framework) |
-| Logic | Vanilla JavaScript (ES6+) |
-| Storage | localStorage (client-side) |
-| Icons | Font Awesome 6 |
-| Fonts | Google Fonts — Playfair Display + DM Sans |
+| Layer    | Technology                    |
+|----------|-------------------------------|
+| Backend  | Python Flask                  |
+| Database | SQLite (via Python `sqlite3`) |
+| Auth     | Werkzeug password hashing     |
+| Frontend | HTML5, CSS3, Vanilla JS       |
+| Icons    | Font Awesome 6                |
+| Fonts    | Google Fonts — Playfair Display + DM Sans |
 
 ---
 
@@ -33,26 +34,61 @@ A frontend web application for browsing and ordering fresh fruits online. Built 
 
 ```
 fruithaven/
-├── index.html          # Main HTML (single-page app)
+├── app.py                  # Flask routes and database logic
+├── database.db             # SQLite database (auto-created on first run)
+├── requirements.txt        # Python dependencies
 ├── README.md
+├── templates/
+│   ├── base.html           # Shared navbar, footer, flash messages
+│   ├── index.html          # Homepage
+│   ├── shop.html           # Product catalogue
+│   ├── cart.html           # Shopping cart
+│   ├── checkout.html       # Delivery form
+│   ├── orders.html         # Order history
+│   ├── login.html          # Login page
+│   ├── register.html       # Register page
+│   ├── about.html          # About page
+│   ├── contact.html        # Contact form
+│   └── admin.html          # Admin dashboard
 └── static/
-    ├── css/
-    │   └── style.css   # All styles
-    └── js/
-        └── main.js     # All logic (cart, navigation, modals)
+    ├── css/style.css
+    └── js/main.js
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-No installation needed. Just open `index.html` in your browser.
-
+**1. Clone the repo**
 ```bash
-git clone https://github.com/YOUR_USERNAME/fruithaven.git
+git clone https://github.com/LEEWXIN/fruithaven.git
 cd fruithaven
-# open index.html in your browser
 ```
+
+**2. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**3. Run the app**
+```bash
+python app.py
+```
+
+**4. Open in browser**
+```
+http://localhost:5000
+```
+
+---
+
+## 🔑 Default Admin Account
+
+| Username | Password  |
+|----------|-----------|
+| admin    | admin123  |
+
+Admin dashboard: `http://localhost:5000/admin`
 
 ---
 
@@ -60,33 +96,33 @@ cd fruithaven
 
 | Page | Description |
 |------|-------------|
-| Home | Hero section + featured products |
-| Shop | Full product grid with category filter |
-| About | Brand story and values |
-| Contact | Contact form |
-| My Orders | Order history |
-| Checkout | Delivery info + payment method |
+| `/` | Hero section + featured products |
+| `/shop` | Full product grid with category filter |
+| `/cart` | Shopping cart with quantity controls |
+| `/checkout` | Delivery info + payment method |
+| `/orders` | Order history with status |
+| `/about` | Brand story and values |
+| `/contact` | Contact form |
+| `/admin` | Admin dashboard (admin only) |
 
 ---
 
 ## 🔮 Planned Improvements
 
-- [ ] Flask backend with SQLite database
-- [ ] Real user authentication (register / login)
-- [ ] Server-side order storage
-- [ ] Admin dashboard (manage products, view orders)
-- [ ] Search and sort functionality
+- [ ] Real fruit images
+- [ ] Product management via admin (add/edit/delete)
+- [ ] Search and sort on shop page
+- [ ] Email confirmation on order
 
 ---
 
 ## 📖 Background
 
-This project is a redesign of two earlier projects:
+This is the third iteration of a fruit store project:
 
-- **PackageFruit** (2022) — Java Swing desktop app with hardcoded login, built during Diploma in IT at Sunway College
-- **Online Fruit Store** (2023) — First attempt at a web version, built during internship preparation
-
-This version combines the best of both: the fruit catalogue and nutrition data from PackageFruit, and the web-based structure from the HTML/CSS version — rebuilt with cleaner code, better design, and proper project structure.
+1. **PackageFruit** (2022) — Java Swing desktop app with hardcoded login, built during Diploma in IT at Sunway College
+2. **Online Fruit Store** (2023) — Static HTML/CSS/JS version, built during internship preparation
+3. **FruitHaven** (2025) — Full-stack Flask version with real database and authentication
 
 ---
 
@@ -94,4 +130,4 @@ This version combines the best of both: the fruit catalogue and nutrition data f
 
 **Lee Wen Xin**  
 Bachelor of IT, Raffles University  
-[GitHub](https://github.com/LEEWXIN/fruithaven.git)
+[GitHub](https://github.com/LEEWXIN)
