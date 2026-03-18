@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Shop — FruitHaven{% endblock %}
+
+{% block content %}
+{% set all_fruits = [
+  (1,  "Envy Apple",           "New Zealand",       "🍎", 10.00, "pc",   "Seasonal", "imported"),
+  (2,  "Dragon Fruit",         "Malaysia",          "🐲", 26.00, "kg",   "Local",    "local"),
+  (3,  "Bing Cherry",          "USA",               "🍒", 45.00, "200g", "Imported", "imported"),
+  (4,  "Australian Blueberry", "Australia",         "🫐", 28.00, "box",  "Imported", "imported"),
+  (5,  "Navel Orange",         "Australia",         "🍊", 15.00, "3pc",  "Imported", "imported"),
+  (6,  "Cameron Strawberry",   "Cameron Highlands", "🍓", 15.00, "box",  "Local",    "local"),
+  (7,  "Ya Pear",              "China",             "🍐", 13.00, "pc",   "Imported", "imported"),
+  (8,  "Yellow Peach",         "China",             "🍑", 12.00, "pc",   "Imported", "imported"),
+  (9,  "Red Globe Grape",      "South Africa",      "🍇", 18.00, "500g", "Imported", "imported"),
+  (10, "Harum Manis Mango",    "Malaysia",          "🥭", 18.00, "kg",   "Seasonal", "local"),
+  (11, "Avocado",              "Mexico",            "🥑", 22.00, "pc",   "Imported", "imported"),
+  (12, "Green Kiwi",           "New Zealand",       "🥝",  8.00, "pc",   "Imported", "imported")
+] %}
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Our Fruits</div>
+    <span style="font-size:.82rem;color:var(--text-dim)">{{ all_fruits|length }} products</span>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filter-row">
+    {% for f, label in [('all','All'),('seasonal','Seasonal'),('local','Local'),('imported','Imported')] %}
+    <a href="{{ url_for('shop', category=f) }}"
+       class="chip {{ 'active' if category == f }}">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+  <!-- GRID -->
+  <div class="product-grid">
+    {% for id, name, origin, emoji, price, unit, tag, cat in all_fruits %}
+    {% if category == 'all' or category == cat or category == tag.lower() %}
+    <div class="product-card">
+      <div class="card-img">
+        <span class="card-tag">{{ tag }}</span>
+        <span style="font-size:3rem">{{ emoji }}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">{{ name }}</div>
+        <div class="card-origin">{{ origin }}</div>
+        <div class="card-footer-row">
+          <div class="card-price">RM {{ "%.2f"|format(price) }}<span> /{{ unit }}</span></div>
+          <form method="POST" action="{{ url_for('cart_add') }}">
+            <input type="hidden" name="fruit_id"    value="{{ id }}">
+            <input type="hidden" name="fruit_name"  value="{{ name }}">
+            <input type="hidden" name="fruit_emoji" value="{{ emoji }}">
+            <input type="hidden" name="price"       value="{{ price }}">
+            <input type="hidden" name="unit"        value="{{ unit }}">
+            <input type="hidden" name="redirect_to" value="shop">
+            <button type="submit" class="add-btn">+</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
