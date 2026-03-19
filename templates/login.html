@@ -1,26 +1,58 @@
 {% extends 'base.html' %}
 {% block title %}Login — FruitHaven{% endblock %}
 {% block content %}
-<div style="max-width:400px;margin:4rem auto;padding:0 1.5rem">
-  <div style="text-align:center;margin-bottom:2rem">
-    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:.25rem">FruitHaven</div>
-    <p style="color:var(--text-muted);font-size:.9rem">Welcome back</p>
+<div style="max-width:480px;margin:4rem auto;padding:0 1.5rem">
+
+  <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.3);border-radius:20px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.4)">
+
+    <!-- TABS -->
+    <div style="display:flex;padding:.75rem .75rem 0;gap:.5rem">
+      <a href="{{ url_for('login') }}"
+         style="flex:1;text-align:center;padding:.75rem;font-size:.875rem;font-weight:500;border-radius:10px 10px 0 0;background:var(--bg-high);color:var(--gold);text-decoration:none">
+        Login
+      </a>
+      <a href="{{ url_for('register') }}"
+         style="flex:1;text-align:center;padding:.75rem;font-size:.875rem;font-weight:400;border-radius:10px 10px 0 0;color:var(--text-muted);text-decoration:none;transition:color .2s"
+         onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">
+        Register
+      </a>
+    </div>
+
+    <div style="padding:2.5rem">
+      <div style="text-align:center;margin-bottom:2rem">
+        <div style="font-family:'Noto Serif',serif;font-size:1.8rem;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:.4rem">
+          Welcome Back
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;font-weight:300">Access your premium orchard selection.</p>
+      </div>
+
+      <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-row">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Enter your username" required autofocus />
+        </div>
+        <div class="form-row">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="form-submit">Sign In to FruitHaven</button>
+      </form>
+
+      <p style="text-align:center;margin-top:1.25rem;font-size:.82rem;color:var(--text-muted)">
+        Don't have an account?
+        <a href="{{ url_for('register') }}" style="color:var(--gold);font-weight:500">Register</a>
+      </p>
+    </div>
   </div>
 
-  <form method="POST" action="{{ url_for('login') }}"
-        style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem">
-    <div class="form-row">
-      <label>Username</label>
-      <input type="text" name="username" placeholder="Enter your username" required autofocus />
-    </div>
-    <div class="form-row">
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Enter your password" required />
-    </div>
-    <button type="submit" class="form-submit">Login</button>
-    <p style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text-muted)">
-      Don't have an account? <a href="{{ url_for('register') }}" style="color:var(--gold)">Register</a>
-    </p>
-  </form>
+  <p style="text-align:center;margin-top:1.5rem;font-size:.75rem;color:rgba(208,197,175,0.35);max-width:280px;margin-left:auto;margin-right:auto;line-height:1.6">
+    By entering the orchard, you agree to our
+    <a href="#" style="color:rgba(208,197,175,0.5);text-decoration:underline">Terms of Service</a>
+    and <a href="#" style="color:rgba(208,197,175,0.5);text-decoration:underline">Privacy Policy</a>.
+  </p>
+
+  <div style="text-align:center;margin-top:2rem;font-family:'Noto Serif',serif;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(212,175,55,0.3)">
+    FruitHaven
+  </div>
 </div>
 {% endblock %}

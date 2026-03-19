@@ -1,97 +1,160 @@
 {% extends 'base.html' %}
-{% block title %}Admin — FruitHaven{% endblock %}
+{% block title %}Admin Dashboard — FruitHaven{% endblock %}
 {% block content %}
-<div style="max-width:1100px;margin:0 auto;padding:2rem">
 
-  <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.5rem">Admin Dashboard</div>
+<div style="max-width:1200px;margin:0 auto;padding:2.5rem 2.5rem 4rem">
 
-  <!-- STATS -->
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2.5rem">
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Total Orders</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.8rem">{{ orders|length }}</div>
+  <!-- HEADER -->
+  <div style="margin-bottom:2rem">
+    <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.4rem">Overview</div>
+    <div style="font-family:'Noto Serif',serif;font-size:2rem;font-weight:700;letter-spacing:-0.02em">Management Dashboard</div>
+  </div>
+
+  <!-- STATS CARDS -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2.5rem">
+
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+        <div style="width:44px;height:44px;background:var(--bg-high);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">🛍️</div>
+        <span style="font-size:.68rem;color:var(--green);background:rgba(30,58,36,0.5);border-radius:20px;padding:2px 8px;font-weight:600">+12.5%</span>
+      </div>
+      <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.4rem">Total Orders</div>
+      <div style="font-family:'Noto Serif',serif;font-size:2rem;font-weight:700">{{ orders|length }}</div>
     </div>
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Total Revenue</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold)">RM {{ "%.2f"|format(total_revenue) }}</div>
+
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+        <div style="width:44px;height:44px;background:var(--bg-high);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">💰</div>
+        <span style="font-size:.68rem;color:var(--green);background:rgba(30,58,36,0.5);border-radius:20px;padding:2px 8px;font-weight:600">+8.2%</span>
+      </div>
+      <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.4rem">Revenue</div>
+      <div style="font-family:'Noto Serif',serif;font-size:2rem;font-weight:700;color:var(--gold)">RM {{ "%.0f"|format(total_revenue) }}</div>
     </div>
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Registered Users</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--green)">{{ users|length }}</div>
+
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+        <div style="width:44px;height:44px;background:var(--bg-high);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">👥</div>
+        <span style="font-size:.68rem;color:var(--green);background:rgba(30,58,36,0.5);border-radius:20px;padding:2px 8px;font-weight:600">+15.3%</span>
+      </div>
+      <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.4rem">Users</div>
+      <div style="font-family:'Noto Serif',serif;font-size:2rem;font-weight:700;color:var(--green)">{{ users|length }}</div>
     </div>
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-      <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.5rem">Pending Orders</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#f59e0b">{{ pending_orders }}</div>
+
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+        <div style="width:44px;height:44px;background:var(--bg-high);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem">⏳</div>
+        <span style="font-size:.68rem;color:#f59e0b;background:rgba(245,158,11,0.15);border-radius:20px;padding:2px 8px;font-weight:600">High</span>
+      </div>
+      <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.4rem">Pending</div>
+      <div style="font-family:'Noto Serif',serif;font-size:2rem;font-weight:700;color:#f59e0b">{{ pending_orders }}</div>
     </div>
+
   </div>
 
   <!-- ORDERS TABLE -->
-  <div style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem">All Orders</div>
-  <div style="overflow-x:auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-bottom:2.5rem">
-    <table style="width:100%;border-collapse:collapse;font-size:.85rem">
-      <thead>
-        <tr>
-          {% for h in ['Order ID','Customer','Items','Total','Address','Payment','Date','Status'] %}
-          <th style="text-align:left;padding:.75rem 1rem;font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);font-weight:400">{{ h }}</th>
+  <div style="margin-bottom:2.5rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
+      <div style="font-family:'Noto Serif',serif;font-size:1.2rem;font-weight:700">Recent Orders</div>
+    </div>
+
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+        <thead>
+          <tr>
+            {% for h in ['Order ID','Customer','Items','Total','Address','Payment','Date','Status'] %}
+            <th style="text-align:left;padding:.85rem 1.1rem;font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid rgba(77,70,53,0.2);font-weight:600;white-space:nowrap">{{ h }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in orders %}
+          <tr style="transition:background .15s" onmouseover="this.style.background='rgba(77,70,53,0.08)'" onmouseout="this.style.background='transparent'">
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15)">
+              <span style="font-family:'Noto Serif',serif;color:var(--gold);font-weight:600">#{{ o.id }}</span>
+            </td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15)">
+              <div style="display:flex;align-items:center;gap:.6rem">
+                <div style="width:30px;height:30px;border-radius:50%;background:var(--bg-highest);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;color:var(--gold);flex-shrink:0">
+                  {{ o.username[0].upper() }}
+                </div>
+                <span style="color:var(--text-muted)">{{ o.username }}</span>
+              </div>
+            </td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text-muted);max-width:180px">
+              {% for item in o.items %}{{ item.emoji }} {{ item.name }} ×{{ item.qty }}{% if not loop.last %}, {% endif %}{% endfor %}
+            </td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text);white-space:nowrap;font-weight:500">
+              RM {{ "%.2f"|format(o.total) }}
+            </td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text-muted);max-width:140px;font-size:.75rem">{{ o.address }}</td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text-muted);font-size:.75rem;white-space:nowrap">{{ o.payment }}</td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text-dim);white-space:nowrap;font-size:.75rem">{{ o.created[:10] if o.created else '' }}</td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15)">
+              <form method="POST" action="{{ url_for('update_status') }}" style="display:flex;gap:.5rem;align-items:center">
+                <input type="hidden" name="order_id" value="{{ o.raw_id }}">
+                <select name="status"
+                  style="background:var(--bg-high);border:1px solid rgba(77,70,53,0.3);border-radius:8px;padding:4px 8px;color:var(--text);font-size:.75rem;font-family:'Inter',sans-serif;cursor:pointer;outline:none">
+                  {% for s in ['Pending','Processing','Shipped','Delivered','Cancelled'] %}
+                  <option value="{{ s }}" {{ 'selected' if o.status == s }}>{{ s }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit"
+                  style="background:rgba(30,58,36,0.5);border:1px solid rgba(45,85,53,0.5);border-radius:8px;padding:4px 12px;color:var(--green);font-size:.75rem;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;white-space:nowrap"
+                  onmouseover="this.style.background='rgba(30,58,36,0.8)'" onmouseout="this.style.background='rgba(30,58,36,0.5)'">
+                  Save
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" style="text-align:center;padding:3rem;color:var(--text-dim)">No orders yet</td>
+          </tr>
           {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for o in orders %}
-        <tr>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--gold);font-family:'Playfair Display',serif">#{{ o.id }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted)">{{ o.username }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);max-width:200px">
-            {% for item in o.items %}{{ item.emoji }} {{ item.name }} ×{{ item.qty }}{% if not loop.last %}, {% endif %}{% endfor %}
-          </td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);white-space:nowrap">RM {{ "%.2f"|format(o.total) }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);max-width:160px;font-size:.78rem">{{ o.address }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);font-size:.78rem">{{ o.payment }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-dim);white-space:nowrap;font-size:.78rem">{{ o.created }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
-            <form method="POST" action="{{ url_for('update_status') }}" style="display:flex;gap:.5rem;align-items:center">
-              <input type="hidden" name="order_id" value="{{ o.raw_id }}">
-              <select name="status"
-                style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text);font-size:.8rem;font-family:'DM Sans',sans-serif;cursor:pointer">
-                {% for s in ['Pending','Processing','Shipped','Delivered','Cancelled'] %}
-                <option value="{{ s }}" {{ 'selected' if o.status == s }}>{{ s }}</option>
-                {% endfor %}
-              </select>
-              <button type="submit" style="background:var(--green-dim);border:1px solid var(--border-h);border-radius:6px;padding:3px 10px;color:var(--green);font-size:.78rem;cursor:pointer;font-family:'DM Sans',sans-serif">Save</button>
-            </form>
-          </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-dim)">No orders yet</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- USERS TABLE -->
-  <div style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:1rem">Registered Users</div>
-  <div style="overflow-x:auto;background:var(--bg-card);border:1px solid var(--border);border-radius:12px">
-    <table style="width:100%;border-collapse:collapse;font-size:.85rem">
-      <thead>
-        <tr>
-          {% for h in ['ID','Username','Role','Joined'] %}
-          <th style="text-align:left;padding:.75rem 1rem;font-size:.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);font-weight:400">{{ h }}</th>
+  <div>
+    <div style="font-family:'Noto Serif',serif;font-size:1.2rem;font-weight:700;margin-bottom:1.25rem">Registered Users</div>
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;overflow:hidden">
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+        <thead>
+          <tr>
+            {% for h in ['ID','Username','Role','Joined'] %}
+            <th style="text-align:left;padding:.85rem 1.1rem;font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid rgba(77,70,53,0.2);font-weight:600">{{ h }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr style="transition:background .15s" onmouseover="this.style.background='rgba(77,70,53,0.08)'" onmouseout="this.style.background='transparent'">
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text-dim)">{{ u.id }}</td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15)">
+              <div style="display:flex;align-items:center;gap:.6rem">
+                <div style="width:30px;height:30px;border-radius:50%;background:var(--bg-highest);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;color:{{ 'var(--gold)' if u.role == 'admin' else 'var(--green)' }};flex-shrink:0">
+                  {{ u.username[0].upper() }}
+                </div>
+                <span style="color:var(--text-muted)">{{ u.username }}</span>
+              </div>
+            </td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15)">
+              <span style="font-size:.68rem;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:.05em;
+                background:{{ 'rgba(242,202,80,0.12)' if u.role == 'admin' else 'rgba(126,207,142,0.12)' }};
+                color:{{ 'var(--gold)' if u.role == 'admin' else 'var(--green)' }}">
+                {{ u.role }}
+              </span>
+            </td>
+            <td style="padding:.85rem 1.1rem;border-bottom:1px solid rgba(77,70,53,0.15);color:var(--text-dim);font-size:.75rem">
+              {{ u.created[:10] if u.created else '' }}
+            </td>
+          </tr>
           {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for u in users %}
-        <tr>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-dim)">{{ u.id }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted)">{{ u.username }}</td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border)">
-            <span style="font-size:.7rem;padding:2px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:{{ 'var(--gold)' if u.role == 'admin' else 'var(--green)' }}">{{ u.role }}</span>
-          </td>
-          <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);color:var(--text-dim);font-size:.78rem">{{ u.created }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>

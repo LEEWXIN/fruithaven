@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}Cart — FruitHaven{% endblock %}
+{% block title %}Your Basket — FruitHaven{% endblock %}
 
 {% block content %}
-<div class="section" style="max-width:700px;margin:0 auto">
-  <div class="section-title" style="margin-bottom:1.5rem">Your Cart</div>
+<div class="page-hero">
+  <h1>Your <em>Basket</em></h1>
+  <p>A curated selection of nature's finest harvests, awaiting delivery to your sanctuary.</p>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:1.5rem 2.5rem 4rem;display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start">
 
   {% if cart %}
-  <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem">
+  <!-- CART ITEMS -->
+  <div style="display:flex;flex-direction:column;gap:.75rem">
     {% for item in cart %}
-    <div style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)">
-      <div style="font-size:1.8rem;width:48px;height:48px;background:#162018;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.25rem;display:flex;align-items:center;gap:1.25rem">
+      <div style="width:72px;height:72px;background:var(--bg-highest);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;flex-shrink:0">
         {{ item.emoji }}
       </div>
       <div style="flex:1">
-        <div style="font-size:.9rem;font-weight:500;color:#e8dfc0">{{ item.name }}</div>
-        <div style="font-size:.78rem;color:var(--text-dim)">RM {{ "%.2f"|format(item.price) }} / {{ item.unit }}</div>
+        <div style="font-size:.95rem;font-weight:500;color:var(--text);margin-bottom:3px">{{ item.name }}</div>
+        <div style="font-size:.75rem;color:var(--text-dim)">RM {{ "%.2f"|format(item.price) }} / {{ item.unit }}</div>
       </div>
 
-      <!-- qty controls -->
+      <!-- QTY CONTROLS -->
       <div style="display:flex;align-items:center;gap:.5rem">
         <form method="POST" action="{{ url_for('cart_update') }}" style="display:inline">
           <input type="hidden" name="fruit_id" value="{{ item.id }}">
@@ -32,36 +37,60 @@
         </form>
       </div>
 
-      <div style="font-family:'Playfair Display',serif;color:var(--gold);min-width:80px;text-align:right">
+      <div style="font-family:'Noto Serif',serif;color:var(--gold);font-weight:700;min-width:90px;text-align:right;font-size:1rem">
         RM {{ "%.2f"|format(item.price * item.qty) }}
       </div>
 
       <form method="POST" action="{{ url_for('cart_update') }}" style="display:inline">
         <input type="hidden" name="fruit_id" value="{{ item.id }}">
         <input type="hidden" name="action"   value="remove">
-        <button type="submit" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1rem;padding:0 .25rem">✕</button>
+        <button type="submit" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1rem;padding:.25rem;border-radius:6px;transition:color .2s"
+                onmouseover="this.style.color='#e08080'" onmouseout="this.style.color='var(--text-dim)'">✕</button>
       </form>
     </div>
     {% endfor %}
 
-    <!-- total row -->
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem">
-      <span style="font-size:.9rem;color:var(--text-muted)">Total</span>
-      <span style="font-family:'Playfair Display',serif;font-size:1.4rem">RM {{ "%.2f"|format(total) }}</span>
+    <a href="{{ url_for('shop') }}" class="btn-ghost" style="display:inline-block;padding:.65rem 1.25rem;font-size:.82rem;margin-top:.5rem;width:fit-content">
+      ← Continue Shopping
+    </a>
+  </div>
+
+  <!-- SUMMARY SIDEBAR -->
+  <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem;position:sticky;top:80px">
+    <div style="font-family:'Noto Serif',serif;font-size:1.2rem;font-weight:700;margin-bottom:1.25rem">Summary</div>
+
+    <div style="display:flex;justify-content:space-between;padding:.6rem 0;font-size:.875rem;border-bottom:1px solid rgba(77,70,53,0.2)">
+      <span style="color:var(--text-muted)">Subtotal</span>
+      <span>RM {{ "%.2f"|format(total) }}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:.6rem 0;font-size:.875rem;border-bottom:1px solid rgba(77,70,53,0.2)">
+      <span style="color:var(--text-muted)">Logistics</span>
+      <span>RM 15.00</span>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;padding:1rem 0 1.25rem">
+      <span style="font-size:.875rem;color:var(--text-muted)">Total</span>
+      <span style="font-family:'Noto Serif',serif;font-size:1.5rem;font-weight:700;color:var(--gold)">RM {{ "%.2f"|format(total + 15) }}</span>
+    </div>
+
+    <a href="{{ url_for('checkout') }}" class="form-submit" style="display:block;text-align:center;padding:.85rem">
+      Proceed to Checkout →
+    </a>
+
+    <div style="text-align:center;margin-top:.75rem;font-size:.7rem;color:var(--text-dim);display:flex;align-items:center;justify-content:center;gap:.4rem">
+      <i class="fa-solid fa-shield-halved" style="font-size:.65rem"></i>
+      Encrypted Transaction Secured
     </div>
   </div>
 
-  <div style="display:flex;gap:.75rem;justify-content:flex-end">
-    <a href="{{ url_for('shop') }}" class="btn-ghost" style="padding:.65rem 1.25rem">Continue Shopping</a>
-    <a href="{{ url_for('checkout') }}" class="btn-primary" style="padding:.65rem 1.25rem">Checkout →</a>
-  </div>
-
   {% else %}
-  <div style="text-align:center;padding:4rem 0;color:var(--text-dim)">
-    <div style="font-size:3rem;margin-bottom:1rem">🛒</div>
-    <p style="margin-bottom:1.5rem">Your cart is empty</p>
-    <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.65rem 1.5rem">Browse Fruits</a>
+  <div style="grid-column:1/-1;text-align:center;padding:5rem 0;color:var(--text-dim)">
+    <div style="font-size:3.5rem;margin-bottom:1.25rem">🛒</div>
+    <div style="font-family:'Noto Serif',serif;font-size:1.4rem;margin-bottom:.5rem">Your basket is empty</div>
+    <p style="font-size:.875rem;margin-bottom:2rem;font-weight:300">Discover our premium selection of fresh fruits</p>
+    <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.75rem 1.75rem;font-size:.9rem;border-radius:12px">Browse Fruits</a>
   </div>
   {% endif %}
+
 </div>
 {% endblock %}

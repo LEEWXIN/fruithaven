@@ -1,53 +1,126 @@
 {% extends 'base.html' %}
-{% block title %}Checkout — FruitHaven{% endblock %}
+{% block title %}Secure Checkout — FruitHaven{% endblock %}
 
 {% block content %}
-<div style="max-width:800px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start">
+<div class="breadcrumb">
+  <a href="{{ url_for('shop') }}">Shop</a>
+  <span class="breadcrumb-sep">›</span>
+  <a href="{{ url_for('cart') }}">Cart</a>
+  <span class="breadcrumb-sep">›</span>
+  <span class="current">Checkout</span>
+</div>
+
+<div style="max-width:1000px;margin:1.5rem auto;padding:0 2.5rem 4rem;display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start">
 
   <!-- DELIVERY FORM -->
   <div>
-    <div class="section-title" style="margin-bottom:1.5rem">Delivery Details</div>
-    <form method="POST" action="{{ url_for('checkout') }}"
-          style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
-      <div class="form-row">
-        <label>Full Name</label>
-        <input type="text" name="name" placeholder="Your full name" required />
+    <div style="font-family:'Noto Serif',serif;font-size:2rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:2rem">
+      Secure Checkout
+    </div>
+
+    <form method="POST" action="{{ url_for('checkout') }}">
+
+      <!-- STEP 1 -->
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <div style="width:28px;height:28px;background:var(--bg-highest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:var(--gold);flex-shrink:0">1</div>
+        <div style="font-family:'Noto Serif',serif;font-size:1.05rem;font-weight:600">Delivery Information</div>
       </div>
-      <div class="form-row">
-        <label>Phone Number</label>
-        <input type="tel" name="phone" placeholder="+60 12-345 6789" required />
+
+      <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+          <div class="form-row" style="margin-bottom:0">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="e.g. Ahmad Ibrahim" required />
+          </div>
+          <div class="form-row" style="margin-bottom:0">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="+60 12-345 6789" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Shipping Address</label>
+          <textarea name="address" rows="3" placeholder="Suite, Street, Building, District..." required></textarea>
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <label>Payment Method</label>
+          <select name="payment" class="form-select">
+            <option>Online Banking (FPX)</option>
+            <option>Credit / Debit Card</option>
+            <option>Cash on Delivery</option>
+            <option>e-Wallet (Touch 'n Go)</option>
+          </select>
+        </div>
       </div>
-      <div class="form-row">
-        <label>Delivery Address</label>
-        <textarea name="address" rows="4" placeholder="Street, city, postcode..." required></textarea>
+
+      <!-- STEP 2 (visual only) -->
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <div style="width:28px;height:28px;background:var(--bg-highest);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:var(--text-dim);flex-shrink:0">2</div>
+        <div style="font-family:'Noto Serif',serif;font-size:1.05rem;font-weight:600;color:var(--text-muted)">Delivery Slot</div>
       </div>
-      <div class="form-row">
-        <label>Payment Method</label>
-        <select name="payment" class="form-select">
-          <option>Online Banking (FPX)</option>
-          <option>Credit / Debit Card</option>
-          <option>Cash on Delivery</option>
-          <option>e-Wallet (Touch n Go)</option>
-        </select>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:2rem">
+        {% for slot in [('Tomorrow','09:00 – 12:00','Morning Fresh'),('Tomorrow','14:00 – 17:00','Afternoon Bloom'),('Wed, 28 May','09:00 – 12:00','Morning Fresh')] %}
+        <label style="background:var(--bg-low);border:1px solid {% if loop.first %}var(--gold){% else %}rgba(77,70,53,0.25){% endif %};border-radius:12px;padding:1rem;cursor:pointer">
+          <div style="font-size:.72rem;color:{% if loop.first %}var(--gold){% else %}var(--text-muted){% endif %};font-weight:600;margin-bottom:.25rem">{{ slot[0] }}</div>
+          <div style="font-size:.85rem;font-weight:500">{{ slot[1] }}</div>
+          <div style="font-size:.72rem;color:var(--text-dim);margin-top:2px">{{ slot[2] }}</div>
+        </label>
+        {% endfor %}
       </div>
-      <button type="submit" class="form-submit">Place Order</button>
+
+      <button type="submit" class="form-submit" style="font-size:.95rem;padding:1rem;border-radius:14px">
+        Place Order →
+      </button>
     </form>
   </div>
 
-  <!-- ORDER SUMMARY -->
-  <div>
-    <div class="section-title" style="margin-bottom:1.5rem">Order Summary</div>
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+  <!-- ORDER SUMMARY SIDEBAR -->
+  <div style="position:sticky;top:80px">
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1.5rem">
+      <div style="font-family:'Noto Serif',serif;font-size:1.1rem;font-weight:700;margin-bottom:1.25rem">Order Summary</div>
+
       {% for item in cart %}
-      <div style="display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.875rem">
-        <span>{{ item.emoji }} {{ item.name }} × {{ item.qty }}</span>
-        <span style="color:var(--gold)">RM {{ "%.2f"|format(item.price * item.qty) }}</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid rgba(77,70,53,0.15);font-size:.85rem">
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <span style="font-size:1.1rem">{{ item.emoji }}</span>
+          <div>
+            <div style="font-weight:500;color:var(--text)">{{ item.name }}</div>
+            <div style="font-size:.72rem;color:var(--text-dim)">{{ item.qty }} × RM {{ "%.2f"|format(item.price) }}</div>
+          </div>
+        </div>
+        <span style="color:var(--gold);font-weight:600">RM {{ "%.2f"|format(item.price * item.qty) }}</span>
       </div>
       {% endfor %}
-      <div style="display:flex;justify-content:space-between;padding:.75rem 0;font-weight:500">
-        <span>Total</span>
-        <span style="font-family:'Playfair Display',serif;font-size:1.2rem">RM {{ "%.2f"|format(total) }}</span>
+
+      <div style="padding:.6rem 0;font-size:.82rem;display:flex;justify-content:space-between;border-bottom:1px solid rgba(77,70,53,0.15)">
+        <span style="color:var(--text-muted)">Subtotal</span><span>RM {{ "%.2f"|format(total) }}</span>
       </div>
+      <div style="padding:.6rem 0;font-size:.82rem;display:flex;justify-content:space-between;border-bottom:1px solid rgba(77,70,53,0.15)">
+        <span style="color:var(--text-muted)">Delivery Fee</span><span>RM 15.00</span>
+      </div>
+      <div style="padding:.6rem 0;font-size:.82rem;display:flex;justify-content:space-between;border-bottom:1px solid rgba(77,70,53,0.15)">
+        <span style="color:var(--text-muted)">Processing Fee</span><span>RM 2.00</span>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:.9rem 0 1.25rem">
+        <div>
+          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);font-weight:600;margin-bottom:2px">Total Amount</div>
+          <div style="font-size:.7rem;color:var(--text-dim)">Including SST (6%)</div>
+        </div>
+        <span style="font-family:'Noto Serif',serif;font-size:1.5rem;font-weight:700;color:var(--gold)">RM {{ "%.2f"|format(total + 17) }}</span>
+      </div>
+
+      <div style="text-align:center;font-size:.7rem;color:var(--text-dim);display:flex;align-items:center;justify-content:center;gap:.4rem">
+        <i class="fa-solid fa-lock" style="font-size:.65rem"></i>
+        Encrypted Transaction
+      </div>
+    </div>
+
+    <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:16px;padding:1rem 1.25rem;margin-top:.75rem;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:.82rem;font-weight:500">Have a voucher?</div>
+        <div style="font-size:.72rem;color:var(--text-dim)">Apply your discount code at checkout.</div>
+      </div>
+      <span style="font-size:.78rem;color:var(--gold);cursor:pointer;font-weight:500">Add Code</span>
     </div>
   </div>
 

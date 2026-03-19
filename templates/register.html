@@ -1,30 +1,52 @@
 {% extends 'base.html' %}
 {% block title %}Register — FruitHaven{% endblock %}
 {% block content %}
-<div style="max-width:400px;margin:4rem auto;padding:0 1.5rem">
-  <div style="text-align:center;margin-bottom:2rem">
-    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);margin-bottom:.25rem">FruitHaven</div>
-    <p style="color:var(--text-muted);font-size:.9rem">Create your account</p>
-  </div>
+<div style="max-width:480px;margin:4rem auto;padding:0 1.5rem">
 
-  <form method="POST" action="{{ url_for('register') }}"
-        style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:2rem">
-    <div class="form-row">
-      <label>Username</label>
-      <input type="text" name="username" placeholder="At least 3 characters" required autofocus />
+  <div style="background:var(--bg-low);border:1px solid rgba(77,70,53,0.3);border-radius:20px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.4)">
+
+    <!-- TABS -->
+    <div style="display:flex;padding:.75rem .75rem 0;gap:.5rem">
+      <a href="{{ url_for('login') }}"
+         style="flex:1;text-align:center;padding:.75rem;font-size:.875rem;font-weight:400;border-radius:10px 10px 0 0;color:var(--text-muted);text-decoration:none;transition:color .2s"
+         onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">
+        Login
+      </a>
+      <a href="{{ url_for('register') }}"
+         style="flex:1;text-align:center;padding:.75rem;font-size:.875rem;font-weight:500;border-radius:10px 10px 0 0;background:var(--bg-high);color:var(--gold);text-decoration:none">
+        Register
+      </a>
     </div>
-    <div class="form-row">
-      <label>Password</label>
-      <input type="password" name="password" placeholder="At least 6 characters" required />
+
+    <div style="padding:2.5rem">
+      <div style="text-align:center;margin-bottom:2rem">
+        <div style="font-family:'Noto Serif',serif;font-size:1.8rem;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:.4rem">
+          Join the Orchard
+        </div>
+        <p style="color:var(--text-muted);font-size:.875rem;font-weight:300">Create your account to start ordering.</p>
+      </div>
+
+      <form method="POST" action="{{ url_for('register') }}">
+        <div class="form-row">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="At least 3 characters" required autofocus />
+        </div>
+        <div class="form-row">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="At least 6 characters" required />
+        </div>
+        <div class="form-row">
+          <label>Confirm Password</label>
+          <input type="password" name="confirm" placeholder="Repeat your password" required />
+        </div>
+        <button type="submit" class="form-submit">Create Account</button>
+      </form>
+
+      <p style="text-align:center;margin-top:1.25rem;font-size:.82rem;color:var(--text-muted)">
+        Already have an account?
+        <a href="{{ url_for('login') }}" style="color:var(--gold);font-weight:500">Login</a>
+      </p>
     </div>
-    <div class="form-row">
-      <label>Confirm Password</label>
-      <input type="password" name="confirm" placeholder="Repeat your password" required />
-    </div>
-    <button type="submit" class="form-submit">Create Account</button>
-    <p style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text-muted)">
-      Already have an account? <a href="{{ url_for('login') }}" style="color:var(--gold)">Login</a>
-    </p>
-  </form>
+  </div>
 </div>
 {% endblock %}

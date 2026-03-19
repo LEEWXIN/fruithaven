@@ -1,18 +1,59 @@
 {% extends 'base.html' %}
 {% block title %}About — FruitHaven{% endblock %}
 {% block content %}
-<div class="about-section">
-  <div class="about-intro">
-    <h2>About FruitHaven</h2>
-    <p>We source premium fruits directly from trusted farms across Malaysia and beyond — cutting out the middleman so you get fresher produce at honest prices.</p>
-  </div>
+
+<div class="page-hero">
+  <h1>About <em>FruitHaven</em></h1>
+  <p>We source premium fruits directly from trusted farms across Malaysia and beyond — cutting out the middleman so you get fresher produce at honest prices.</p>
+</div>
+
+<div class="about-section" style="padding-top:1.5rem">
   <div class="about-grid">
-    <div class="about-card"><div class="about-icon">🌱</div><h3>Farm to Door</h3><p>Every fruit is sourced directly from certified farms. We visit our suppliers regularly to ensure consistent quality and ethical growing practices.</p></div>
-    <div class="about-card"><div class="about-icon">❄️</div><h3>Cold-Chain Delivery</h3><p>Our refrigerated logistics network maintains optimal temperatures from farm to your doorstep, preserving freshness and nutritional value.</p></div>
-    <div class="about-card"><div class="about-icon">🔬</div><h3>Nutrition-First</h3><p>Each product listing includes detailed nutritional information and health recommendations — because knowing what you eat matters.</p></div>
-    <div class="about-card"><div class="about-icon">🌍</div><h3>Sustainable Practices</h3><p>We use recyclable packaging and partner only with farms that follow sustainable agriculture standards.</p></div>
-    <div class="about-card"><div class="about-icon">📦</div><h3>Flexible Orders</h3><p>Order by piece, kilogram, or box — whatever works for you. No minimum order requirement.</p></div>
-    <div class="about-card"><div class="about-icon">🤝</div><h3>Community First</h3><p>A portion of every sale supports local smallholder farmers across Malaysia.</p></div>
+    <div class="about-card">
+      <div class="about-icon">🌱</div>
+      <h3>Farm to Door</h3>
+      <p>Every fruit is sourced directly from certified farms. We visit our suppliers regularly to ensure consistent quality and ethical growing practices.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">❄️</div>
+      <h3>Cold-Chain Delivery</h3>
+      <p>Our refrigerated logistics network maintains optimal temperatures from farm to your doorstep, preserving freshness and nutritional value.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🔬</div>
+      <h3>Nutrition-First</h3>
+      <p>Each product listing includes detailed nutritional information and health recommendations — because knowing what you eat matters.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🌍</div>
+      <h3>Sustainable Practices</h3>
+      <p>We use recyclable packaging and partner only with farms that follow sustainable agriculture standards.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">📦</div>
+      <h3>Flexible Orders</h3>
+      <p>Order by piece, kilogram, or box — whatever works for you. No minimum order requirement.</p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🤝</div>
+      <h3>Community First</h3>
+      <p>A portion of every sale supports local smallholder farmers across Malaysia.</p>
+    </div>
+  </div>
+
+  <!-- STORY SECTION -->
+  <div style="margin-top:4rem;background:var(--bg-low);border:1px solid rgba(77,70,53,0.25);border-radius:20px;padding:3rem;text-align:center">
+    <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--text-dim);margin-bottom:1rem">Our Story</div>
+    <div style="font-family:'Noto Serif',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:1.25rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.2">
+      Born from a love of <em style="color:var(--gold);font-style:italic">fresh, honest</em> produce
+    </div>
+    <p style="font-size:.9rem;color:var(--text-muted);line-height:1.8;max-width:560px;margin:0 auto 2rem;font-weight:300">
+      FruitHaven started as a small side project — a Java Swing desktop app built during a Diploma in IT. It grew into a web app, and then into what you see today: a full-stack platform connecting Malaysian fruit lovers with the finest seasonal harvests from local and international farms.
+    </p>
+    <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.75rem 2rem;font-size:.9rem;border-radius:12px;display:inline-block">
+      Explore Our Collection
+    </a>
   </div>
 </div>
+
 {% endblock %}

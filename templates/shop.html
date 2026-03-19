@@ -3,7 +3,7 @@
 
 {% block content %}
 {% set all_fruits = [
-  (1,  "Envy Apple",           "New Zealand",       "🍎", 10.00, "pc",   "Seasonal", "imported"),
+  (1,  "Envy Apple",           "New Zealand",       "🍎", 10.00, "pc",   "Seasonal", "seasonal"),
   (2,  "Dragon Fruit",         "Malaysia",          "🐲", 26.00, "kg",   "Local",    "local"),
   (3,  "Bing Cherry",          "USA",               "🍒", 45.00, "200g", "Imported", "imported"),
   (4,  "Australian Blueberry", "Australia",         "🫐", 28.00, "box",  "Imported", "imported"),
@@ -12,14 +12,19 @@
   (7,  "Ya Pear",              "China",             "🍐", 13.00, "pc",   "Imported", "imported"),
   (8,  "Yellow Peach",         "China",             "🍑", 12.00, "pc",   "Imported", "imported"),
   (9,  "Red Globe Grape",      "South Africa",      "🍇", 18.00, "500g", "Imported", "imported"),
-  (10, "Harum Manis Mango",    "Malaysia",          "🥭", 18.00, "kg",   "Seasonal", "local"),
+  (10, "Harum Manis Mango",    "Malaysia",          "🥭", 18.00, "kg",   "Seasonal", "seasonal"),
   (11, "Avocado",              "Mexico",            "🥑", 22.00, "pc",   "Imported", "imported"),
   (12, "Green Kiwi",           "New Zealand",       "🥝",  8.00, "pc",   "Imported", "imported")
 ] %}
 
-<div class="section">
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <h1>Nature's <em>Finest</em><br>Gallery.</h1>
+  <p>Experience a curated selection of premium fruits, harvested at peak maturity and delivered with the respect nature's masterpieces deserve.</p>
+</div>
+
+<div class="section" style="padding-top:1.5rem">
   <div class="section-header">
-    <div class="section-title">Our Fruits</div>
     <span style="font-size:.82rem;color:var(--text-dim)">{{ all_fruits|length }} products</span>
   </div>
 
@@ -38,7 +43,7 @@
     <div class="product-card">
       <div class="card-img">
         <span class="card-tag">{{ tag }}</span>
-        <span style="font-size:3rem">{{ emoji }}</span>
+        <span style="font-size:3.5rem">{{ emoji }}</span>
       </div>
       <div class="card-body">
         <div class="card-name">{{ name }}</div>

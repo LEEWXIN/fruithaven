@@ -1,25 +1,40 @@
 {% extends 'base.html' %}
-{% block title %}FruitHaven — Fresh Fruits Delivered{% endblock %}
+{% block title %}FruitHaven — Nature's Finest, Delivered Fresh{% endblock %}
 
 {% block content %}
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
-    <h1 class="hero-title">Fresh Fruits,<br><em>Delivered</em> to You</h1>
-    <p class="hero-desc">Premium imported and local fruits — picked at peak ripeness, sourced from trusted farms, delivered fresh to your door across Malaysia.</p>
+    <div class="hero-eyebrow">Established 2025 · Johor Bahru, Malaysia</div>
+    <h1 class="hero-title">Nature's <em>Finest,</em><br>Delivered Fresh.</h1>
+    <p class="hero-desc">Curating the rarest gems of the orchard. From the king of fruits to the jewels of the jungle — premium Malaysian and imported produce delivered to your doorstep.</p>
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Varieties</div></div>
       <div class="stat"><div class="stat-num" style="color:var(--gold)">RM8+</div><div class="stat-label">Starting price</div></div>
       <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Fresh</div></div>
     </div>
     <div class="hero-actions">
-      <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.6rem 1.5rem;font-size:.95rem">Shop Now</a>
-      <a href="{{ url_for('about') }}" class="btn-ghost" style="padding:.6rem 1.5rem;font-size:.95rem">Learn More</a>
+      <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.7rem 1.6rem;font-size:.9rem;border-radius:12px">Explore Collection</a>
+      <a href="{{ url_for('about') }}" class="btn-ghost" style="padding:.7rem 1.4rem;font-size:.9rem">Our Story</a>
     </div>
   </div>
   <div class="hero-badge">
     <div class="badge-num">🍎🫐🥭</div>
-    <div class="badge-label" style="margin-top:8px">New arrivals weekly</div>
+    <div class="badge-label">New arrivals weekly</div>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(77,70,53,0.3)">
+      <div style="font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em">100% Organic</div>
+      <div style="font-size:.72rem;color:var(--text-muted);margin-top:2px">Pesticide Free Guaranteed</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY FILTER -->
+<div class="section" style="padding-top:0;padding-bottom:0">
+  <div class="filter-row">
+    <a href="{{ url_for('shop', category='all') }}"      class="chip active">All Fruits</a>
+    <a href="{{ url_for('shop', category='seasonal') }}" class="chip">Seasonal Peak</a>
+    <a href="{{ url_for('shop', category='local') }}"    class="chip">Local Harvest</a>
+    <a href="{{ url_for('shop', category='imported') }}" class="chip">Imported Gems</a>
   </div>
 </div>
 
@@ -33,17 +48,20 @@
   (10, "Harum Manis Mango",    "Malaysia",          "🥭", 18.00, "kg",   "Seasonal")
 ] %}
 
-<div class="section" style="padding-top:0">
+<div class="section">
   <div class="section-header">
-    <div class="section-title">Popular This Week</div>
-    <a href="{{ url_for('shop') }}" class="section-link">View all →</a>
+    <div>
+      <div class="section-title">The Season's Best</div>
+      <div class="section-subtitle">Hand-selected at the peak of ripeness from local estates.</div>
+    </div>
+    <a href="{{ url_for('shop') }}" class="section-link">View All Premium Produce →</a>
   </div>
   <div class="product-grid">
     {% for id, name, origin, emoji, price, unit, tag in fruits %}
     <div class="product-card">
       <div class="card-img">
         <span class="card-tag">{{ tag }}</span>
-        <span style="font-size:3rem">{{ emoji }}</span>
+        <span style="font-size:3.5rem">{{ emoji }}</span>
       </div>
       <div class="card-body">
         <div class="card-name">{{ name }}</div>
@@ -65,4 +83,24 @@
     {% endfor %}
   </div>
 </div>
+
+<!-- JOIN CTA -->
+<div style="text-align:center;padding:4rem 2.5rem;background:var(--bg-low);border-top:1px solid rgba(77,70,53,0.2);border-bottom:1px solid rgba(77,70,53,0.2);margin-top:2rem">
+  <div style="font-family:'Noto Serif',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:.75rem">
+    Join the Orchard Circle
+  </div>
+  <p style="font-size:.9rem;color:var(--text-muted);margin-bottom:2rem;font-weight:300;max-width:400px;margin-left:auto;margin-right:auto">
+    Get early access to rare seasonal harvests and exclusive estate-to-door offers.
+  </p>
+  {% if not session.user_id %}
+  <a href="{{ url_for('register') }}" class="btn-primary" style="padding:.75rem 2rem;font-size:.9rem;border-radius:12px">
+    Create Free Account
+  </a>
+  {% else %}
+  <a href="{{ url_for('shop') }}" class="btn-primary" style="padding:.75rem 2rem;font-size:.9rem;border-radius:12px">
+    Browse Collection
+  </a>
+  {% endif %}
+</div>
+
 {% endblock %}
