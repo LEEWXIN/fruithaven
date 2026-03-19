@@ -1,94 +1,105 @@
 # 🍎 FruitHaven — Online Fruit Store
 
-A full-stack fruit ordering web application built with Python Flask and SQLite. Started as a personal project to revisit and improve upon earlier diploma-era projects.
+A full-stack web application for browsing and ordering fresh fruits online, built with Flask and SQLite.
+
+> **Background:** This project started as a Java Swing desktop app during my Diploma in IT (2022), evolved into a static HTML/CSS website (2023), and has now been rebuilt as a proper full-stack web application — with real authentication, a database, and an admin dashboard.
 
 ---
 
 ## ✨ Features
 
-- **User Auth** — Register and login with hashed passwords
-- **Product Catalogue** — 12 fruit varieties with pricing, origin, and nutrition info
-- **Shopping Cart** — Add, remove, and adjust quantities
-- **Checkout** — Delivery details and payment method saved to database
+### Customer
+- **Browse & Filter** — 12 fruit varieties, filterable by Seasonal / Local / Imported
+- **Shopping Cart** — Add, remove, and adjust quantities with live total (server-side session)
+- **User Auth** — Register and login with hashed passwords (Werkzeug)
+- **Checkout** — Delivery details form with multiple payment method options
 - **Order History** — View all past orders with status tracking
-- **Admin Dashboard** — View all orders, update status, manage users
-- **Responsive Design** — Works on desktop and mobile
-- **Filter by Category** — Seasonal, Local, Imported
+
+### Admin
+- **Dashboard** — Total orders, revenue, registered users, pending orders at a glance
+- **Order Management** — Update order status (Pending → Processing → Shipped → Delivered)
+- **User List** — View all registered accounts and their roles
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer    | Technology                    |
-|----------|-------------------------------|
-| Backend  | Python Flask                  |
+| Layer | Technology |
+|-------|-----------|
+| Backend | Python 3, Flask |
 | Database | SQLite (via Python `sqlite3`) |
-| Auth     | Werkzeug password hashing     |
-| Frontend | HTML5, CSS3, Vanilla JS       |
-| Icons    | Font Awesome 6                |
-| Fonts    | Google Fonts — Playfair Display + DM Sans |
-
----
-
-## 📁 File Structure
-
-```
-fruithaven/
-├── app.py                  # Flask routes and database logic
-├── database.db             # SQLite database (auto-created on first run)
-├── requirements.txt        # Python dependencies
-├── README.md
-├── templates/
-│   ├── base.html           # Shared navbar, footer, flash messages
-│   ├── index.html          # Homepage
-│   ├── shop.html           # Product catalogue
-│   ├── cart.html           # Shopping cart
-│   ├── checkout.html       # Delivery form
-│   ├── orders.html         # Order history
-│   ├── login.html          # Login page
-│   ├── register.html       # Register page
-│   ├── about.html          # About page
-│   ├── contact.html        # Contact form
-│   └── admin.html          # Admin dashboard
-└── static/
-    ├── css/style.css
-    └── js/main.js
-```
+| Auth | Werkzeug password hashing |
+| Templating | Jinja2 |
+| Styling | Custom CSS3 (no framework) |
+| Icons | Font Awesome 6 |
+| Fonts | Google Fonts — Playfair Display + DM Sans |
 
 ---
 
 ## 🚀 Getting Started
 
-**1. Clone the repo**
+### 1. Clone the repo
 ```bash
 git clone https://github.com/LEEWXIN/fruithaven.git
 cd fruithaven
 ```
 
-**2. Install dependencies**
+### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-**3. Run the app**
+### 3. Run the app
 ```bash
 python app.py
 ```
 
-**4. Open in browser**
+### 4. Open in browser
 ```
-http://localhost:5000
+http://127.0.0.1:5000
 ```
+
+The database (`database.db`) is created automatically on first run, along with a default admin account.
 
 ---
 
 ## 🔑 Default Admin Account
 
-| Username | Password  |
-|----------|-----------|
-| admin    | admin123  |
+| Field | Value |
+|-------|-------|
+| Username | `admin` |
+| Password | `admin123` |
 
-Admin dashboard: `http://localhost:5000/admin`
+> ⚠️ Change the admin password after first login in a production environment.
+
+---
+
+## 📁 Project Structure
+
+```
+fruithaven/
+├── app.py                  # Flask routes and database logic
+├── database.db             # SQLite database (auto-created)
+├── requirements.txt
+├── README.md
+├── templates/
+│   ├── base.html           # Shared layout (navbar, footer, flash messages)
+│   ├── index.html          # Home page with featured products
+│   ├── shop.html           # Full product catalogue with category filter
+│   ├── cart.html           # Shopping cart
+│   ├── checkout.html       # Delivery form + order summary
+│   ├── orders.html         # Order history (logged-in users)
+│   ├── login.html
+│   ├── register.html
+│   ├── about.html
+│   ├── contact.html
+│   └── admin.html          # Admin dashboard
+└── static/
+    ├── css/
+    │   └── style.css
+    └── js/
+        └── main.js
+```
 
 ---
 
@@ -97,32 +108,35 @@ Admin dashboard: `http://localhost:5000/admin`
 | Page | Description |
 |------|-------------|
 | `/` | Hero section + featured products |
-| `/shop` | Full product grid with category filter |
-| `/cart` | Shopping cart with quantity controls |
-| `/checkout` | Delivery info + payment method |
-| `/orders` | Order history with status |
+| `/shop` | Full catalogue with category filter |
+| `/cart` | Cart with quantity controls |
+| `/checkout` | Delivery details + payment method |
+| `/orders` | Personal order history |
+| `/login` | Login with flash error messages |
+| `/register` | Register with validation |
 | `/about` | Brand story and values |
 | `/contact` | Contact form |
-| `/admin` | Admin dashboard (admin only) |
+| `/admin` | Admin-only dashboard |
 
 ---
 
 ## 🔮 Planned Improvements
 
-- [ ] Real fruit images
-- [ ] Product management via admin (add/edit/delete)
-- [ ] Search and sort on shop page
-- [ ] Email confirmation on order
+- [ ] Product search and sort functionality
+- [ ] Products managed from database (not hardcoded in templates)
+- [ ] Email confirmation on order placement
+- [ ] Pagination for orders and admin tables
+- [ ] Deploy to a live server (Railway / Render)
 
 ---
 
-## 📖 Background
+## 📖 Project History
 
-This is the third iteration of a fruit store project:
-
-1. **PackageFruit** (2022) — Java Swing desktop app with hardcoded login, built during Diploma in IT at Sunway College
-2. **Online Fruit Store** (2023) — Static HTML/CSS/JS version, built during internship preparation
-3. **FruitHaven** (2025) — Full-stack Flask version with real database and authentication
+| Year | Version | Stack |
+|------|---------|-------|
+| 2022 | PackageFruit — Diploma project | Java Swing, hardcoded login |
+| 2023 | Online Fruit Store — Internship prep | HTML, CSS, localStorage |
+| 2025 | FruitHaven — This version | Flask, SQLite, real auth, admin dashboard |
 
 ---
 
@@ -130,4 +144,4 @@ This is the third iteration of a fruit store project:
 
 **Lee Wen Xin**  
 Bachelor of IT, Raffles University  
-[GitHub](https://github.com/LEEWXIN)
+[GitHub](https://github.com/LEEWXIN/fruithaven)
